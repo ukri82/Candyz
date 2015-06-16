@@ -5,11 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.candyz.candyz.R;
 
-import com.candyz.candyz.data.Matrix;
+import com.candyz.candyz.utils.Matrix;
 import com.candyz.candyz.utils.Utils;
 import com.candyz.candyz.data.DataAccess.Sugar;
 

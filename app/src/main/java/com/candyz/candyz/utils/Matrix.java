@@ -1,4 +1,4 @@
-package com.candyz.candyz.data;
+package com.candyz.candyz.utils;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;

@@ -16,12 +16,7 @@
             android:background="@drawable/sugar_bowl_handle"
             />
 
-        <!--<RelativeLayout
-            android:id="@+id/sugar_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </RelativeLayout>-->
-        <com.candyz.candyz.sugarbowl.Infinite2dScroller
+       <com.candyz.candyz.sugarbowl.Infinite2dScroller
             android:id="@+id/sugar_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

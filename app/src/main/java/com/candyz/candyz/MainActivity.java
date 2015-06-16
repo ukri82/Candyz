@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.candyz.candyz.sugarbowl.SugarBowl;
@@ -38,7 +39,7 @@ public class MainActivity extends ActionBarActivity implements SugarBowl.OnFragm
     public void onFragmentCreation(Fragment aFragment_in)
     {
         mySugarBowl = (SugarBowl) aFragment_in;
-        mySugarBowl.setDrawerParams((DrawerLayout) findViewById(R.id.drawer_layout), (ImageView) findViewById(R.id.sugar_bowl_handle_idh));
+        mySugarBowl.setParentView((FrameLayout)findViewById(R.id.fragment_sugar_bowl_id));
     }
 
 

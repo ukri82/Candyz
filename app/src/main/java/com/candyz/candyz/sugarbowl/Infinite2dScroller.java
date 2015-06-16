@@ -22,7 +22,7 @@ public class Infinite2dScroller extends RelativeLayout
 {
 
     Infinite2dTouchListener myViewTouchListener;
-
+    ViewHolder myFirstChild;
 
     public Infinite2dScroller(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -131,7 +131,7 @@ public class Infinite2dScroller extends RelativeLayout
         return true;
     }
 
-    ViewHolder myFirstChild;
+
     private void createFirstChild()
     {
         myFirstChild = createViewHolder(0, 0);
