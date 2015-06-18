@@ -9,12 +9,18 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+        <com.andexert.library.RippleView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            rv_centered="true">
+
         <ImageView
             android:id="@+id/sugar_bowl_handle_on_drawer_id"
             android:layout_width="@dimen/sugar_bowl_handle_width"
             android:layout_height="match_parent"
             android:background="@drawable/sugar_bowl_handle"
             />
+        </com.andexert.library.RippleView>
 
        <com.candyz.candyz.sugarbowl.Infinite2dScroller
             android:id="@+id/sugar_container"

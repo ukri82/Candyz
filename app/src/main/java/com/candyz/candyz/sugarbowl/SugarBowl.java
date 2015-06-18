@@ -1,8 +1,12 @@
 package com.candyz.candyz.sugarbowl;
 
 
+import android.animation.AnimatorSet;
+import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +14,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Transformation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -93,8 +100,8 @@ public class SugarBowl extends Fragment
 
     class SugarBowlDrawerListener implements View.OnTouchListener
     {
-        int myCurrentX;
-        int myCurrentY;
+        int myLastX;
+        int myLastY;
         int myOriginalMargin;
 
         @Override
@@ -104,8 +111,8 @@ public class SugarBowl extends Fragment
             {
                 case MotionEvent.ACTION_DOWN:
                 {
-                    myCurrentX = (int) event.getRawX();
-                    myCurrentY = (int) event.getRawY();
+                    myLastX = (int) event.getRawX();
+                    myLastY = (int) event.getRawY();
 
                     if(myOriginalMargin == 0)
                     {
@@ -121,7 +128,7 @@ public class SugarBowl extends Fragment
                     int y2 = (int) event.getRawY();
 
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) myParentView.getLayoutParams();
-                    int aNewLeftMargin = params.leftMargin + (x2 - myCurrentX);
+                    int aNewLeftMargin = params.leftMargin + (x2 - myLastX);
 
                     if(aNewLeftMargin >= 0 && aNewLeftMargin < myOriginalMargin)
                     {
@@ -130,21 +137,58 @@ public class SugarBowl extends Fragment
                     }
                     Log.d("aView", "onTouch, params.leftMargin : " + params.leftMargin);
 
-                    myCurrentX = x2;
-                    myCurrentY = y2;
+                    myLastX = x2;
+                    myLastY = y2;
                     break;
                 }
                 case MotionEvent.ACTION_UP:
                 {
+                    final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) myParentView.getLayoutParams();
+                    if(params.leftMargin < myOriginalMargin / 2)
+                    {
+                        dragTo(params, params.leftMargin, 0);
+                    }
+                    else
+                    {
+                        dragTo(params, params.leftMargin, myOriginalMargin);
+                    }
 
                     break;
                 }
-
-
-            }
+           }
 
             v.onTouchEvent(event);
             return true;
+        }
+
+        @TargetApi(11)
+        void dragTo(final RelativeLayout.LayoutParams params, int aStart_in, int anEnd_in)
+        {
+            if(Build.VERSION.SDK_INT < 11)
+            {
+                //  No animations :(
+                params.leftMargin = anEnd_in;
+                myParentView.setLayoutParams(params);
+                return;
+            }
+
+            AnimatorSet as = new AnimatorSet();
+
+            ValueAnimator animator = ValueAnimator.ofInt(aStart_in, anEnd_in);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator)
+                {
+                    params.leftMargin = (Integer) valueAnimator.getAnimatedValue();
+                    myParentView.setLayoutParams(params);
+                }
+            });
+            animator.setInterpolator(new BounceInterpolator());
+            animator.setDuration(500);
+
+            as.playSequentially(animator);
+
+            as.start();
         }
     }
 
